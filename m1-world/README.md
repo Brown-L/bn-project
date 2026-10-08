@@ -18,7 +18,7 @@
 
 ### 世界環境參考圖
 
-| 黃石公園／地熱峽谷 | 北大西洋深海熱泉 | 南極洲冰蓋 |
+| 黃石國家公園 | 北大西洋深海熱泉 | 南極洲冰蓋 |
 | :---: | :---: | :---: |
 | <img src="9bdb9bc6d70b146dcba1515650ac75b4.jpg" height="200" alt="黃石公園/地熱峽谷"> | <img src="Blacksmoker_in_Atlantic_Ocean.jpg" height="200" alt="北大西洋深海熱泉"> | <img src="Antarctic-800x369.jpg" height="200" alt="南極洲冰蓋"> |
 
