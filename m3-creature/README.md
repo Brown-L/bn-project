@@ -19,9 +19,6 @@
 
 ![THERMOPEDA QUADRATA 動態生態展示](m3-creature.jpg)
 
-<video src="m3-creature.mp4" controls width="100%"></video>
-
-> 🎬 **展示影片**：[點此在 GitHub 開啟／預覽 30 秒重點操作動態影片 (`m3-creature.mp4`)](m3-creature.mp4)  
 > 📑 **簡報預覽**：[點此在 GitHub 直接開啟／預覽物種發表會簡報 (`m3-簡報.pdf`)](m3-簡報.pdf)  
 > 📖 **完整設定與操作指南**：請參閱本資料夾的 [`notes.md`](notes.md) 物種日誌。
 
