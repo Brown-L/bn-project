@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#070912">
+  <title>THERMOPEDA QUADRATA 01</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="vendor/p5.min.js"></script>
+  <script defer src="audio.js"></script>
+  <script defer src="ecology.js"></script>
+  <script defer src="sketch.js"></script>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="THERMOPEDA QUADRATA 首頁"><span class="brand-mark">T<span>Q</span></span><span>THERMOPEDA QUADRATA<small>SPECIMEN LAB / 01</small></span></a>
+      <div class="top-meta"><span class="live-dot"></span> CONTAINMENT ACTIVE <span class="meta-divider">//</span> 共生觀測中 <span class="hex-id">0x7F4A</span></div>
+      <button id="motionToggle" class="motion-toggle" type="button" aria-pressed="false"><span>◉</span> 動態：開啟</button>
+    </header>
+    <section id="stage" class="stage" aria-label="可互動的賽博生物展示區">
+      <div class="stage-vignette"></div><div class="scanlines"></div>
+      <div class="scale-ticks" aria-hidden="true">||||| 01 // 04</div>
+      <div class="scale-ticks scale-ticks-right" aria-hidden="true">SYS 0x7F4A // MEM</div>
+      <div class="glitch-veil" aria-hidden="true"></div>
+      <div class="stage-heading"><span class="eyebrow">YELLOWSTONE CALDERA / +50,000 YR / SPECIMEN NF-01</span><h1>THERMOPEDA QUADRATA</h1><p>碳基主體與化能微生物共生。游標會吸引注意；點擊產生地面訊號；長按或雙擊投放化學結晶。</p><div class="species-note"><b>能量取得：推測機制</b> — 熱泉無機化學源 → 共生微生物 → 宿主。</div></div>
+      <div class="readout readout-left"><span class="readout-label">生存指標 // VIABILITY</span><strong><i class="signal-bars" id="vitalBars"><b></b><b></b><b></b><b></b><b></b></i><span id="vitalState" data-mode="ok">穩定</span></strong><span class="readout-line"></span><small>VITAL // <b id="vitalValue">60</b>%<br>ENERGY <b id="vitalEnergy">66</b> · HABITAT <b id="vitalHabitat">70</b><br>SYMBIONT <b id="vitalSym">30</b></small></div>
+      <div class="readout readout-right"><span class="readout-label">互動狀態</span><strong id="state">觀察中</strong><span class="readout-line"></span><small>RANGE // <span id="dist">--</span><br>MODE // <b id="stateCode">WATCH</b><br>DRIVE // <b id="drive">EXPLORE</b></small><div id="growthHud" class="growth-hud growth-inline" aria-live="polite"><div class="growth-head"><span>ONTOGENY / 生長</span><b id="growthStage">PROPAGULE</b></div><div class="growth-track"><i id="growthBar"></i></div><small><span id="growthTime">T+00:01 / 00:28 · 5%</span><span id="seasonBadge">SEASON 01</span></small></div></div>
+      <div class="readout readout-thermal"><span class="readout-label">環境適合度 // HABITAT</span><strong id="thermalState" data-mode="warm">適合</strong><span class="meter"><i id="thermalBar" style="width:70%"></i></span><small>FIT <span id="thermalVal">070</span>% · LOCAL <b id="thermalTemp">15.0</b>°C</small></div>
+      <div class="readout readout-energy"><span class="readout-label">能量儲備 // ENERGY</span><strong><span id="energy">66</span><em>%</em></strong><span class="meter pink"><i id="energyBar" style="width:66%"></i></span><small>CHEMO UPTAKE // 推測機制</small></div>
+      <div class="habitat-key" aria-hidden="true"><span><i class="hot"></i>熱泉 / 高溫</span><span>無機化學源 H₂S · Fe²⁺</span><span><i class="cold"></i>外圍 / 低溫</span></div>
+      <div class="crosshair" aria-hidden="true"></div>
+      <div class="stage-footer"><span>游標　吸引注意／靠近</span><span>點擊　地面訊號 · 長按／雙擊　投放結晶 · 快速甩動　防禦</span><span class="coord">X <b id="coordX">000</b>　 Z <b id="coordZ">000</b></span></div>
+
+      <!-- ============ YELLOWSTONE CALDERA TELEMETRY DECK ============ -->
+      <aside id="telemetryDeck" class="telemetry-deck" aria-label="黃石破火山口地熱環境遙測調控表">
+        <button id="deckToggle" class="deck-handle" type="button" aria-expanded="false" aria-controls="deckScroll"><i>◈</i><span>TELEMETRY</span></button>
+        <div id="deckScroll" class="deck-scroll">
+          <header class="deck-head">
+            <span class="deck-eyebrow">YELLOWSTONE CALDERA // SITE 0x7F4A</span>
+            <h2>地熱環境遙測調控表</h2>
+            <span class="deck-sub">TELEMETRY DECK v3.0 · 生態與世代觀測</span>
+            <button id="deckClose" class="deck-close" type="button" aria-label="關閉遙測面板">✕</button>
+          </header>
+
+          <div class="env-table">
+            <div class="env-row" id="rowAir">
+              <div class="env-top">
+                <div><span class="env-name">高原環境氣溫</span><span class="env-code">AIR_TEMP</span></div>
+                <div class="env-value"><input id="airTempNumber" type="number" min="-30" max="60" step="0.5" value="15" inputmode="decimal" aria-label="環境氣溫數值"><span>°C</span></div>
+              </div>
+              <input id="airTempRange" type="range" min="-30" max="60" step="0.5" value="15" aria-label="環境氣溫滑桿">
+              <div class="env-scale"><span>-30 極寒</span><span>15</span><span>60 灼熱</span></div>
+              <p class="env-note" id="airTempNote" data-mode="ok">常溫：代謝與步態維持基準。</p>
+            </div>
+
+            <div class="env-row" id="rowPh">
+              <div class="env-top">
+                <div><span class="env-name">地泉酸鹼度</span><span class="env-code">PH_LEVEL</span></div>
+                <div class="env-value"><input id="phNumber" type="number" min="1" max="12" step="0.1" value="7.0" inputmode="decimal" aria-label="酸鹼度數值"><span>pH</span></div>
+              </div>
+              <input id="phRange" type="range" min="1" max="12" step="0.1" value="7" aria-label="酸鹼度滑桿">
+              <div class="env-scale"><span>1.0 強酸</span><span>7.0</span><span>12.0 強鹼</span></div>
+              <p class="env-note" id="phNote" data-mode="ok">中性：常態漫遊。</p>
+            </div>
+
+            <div class="env-row" id="rowPsi">
+              <div class="env-top">
+                <div><span class="env-name">間歇泉地熱壓力</span><span class="env-code">GEYSER_PSI</span></div>
+                <div class="env-value"><input id="psiNumber" type="number" min="0" max="1000" step="10" value="120" inputmode="numeric" aria-label="間歇泉壓力數值"><span>PSI</span></div>
+              </div>
+              <input id="psiRange" type="range" min="0" max="1000" step="10" value="120" aria-label="間歇泉壓力滑桿">
+              <span class="env-meter"><i id="psiBar" style="width:12%" data-mode="normal"></i></span>
+              <div class="env-scale"><span>0</span><span>750 臨界</span><span>1000</span></div>
+              <p class="env-note" id="psiNote" data-mode="ok">穩定：地熱自然累積 +6 PSI/s。</p>
+              <button id="eruptBtn" class="env-btn erupt" type="button">⌁ FORCE ERUPT / 手動引爆</button>
+            </div>
+
+            <div class="env-row" id="rowFeed">
+              <div class="env-top">
+                <div><span class="env-name">嗜熱菌營養投放</span><span class="env-code">THERMO_FEED</span></div>
+                <span class="env-tag" id="feedTag" data-mode="none">NO SYMBIONT</span>
+              </div>
+              <div class="feed-grid">
+                <button class="feed-btn" data-kind="GOLD" type="button"><i></i>GOLD<small>高溫</small></button>
+                <button class="feed-btn" data-kind="EMERALD" type="button"><i></i>EMERALD<small>微酸</small></button>
+                <button class="feed-btn" data-kind="AZURE" type="button"><i></i>AZURE<small>冷區</small></button>
+              </div>
+              <p class="env-note">投放後生物會趨前，以六根觸角貼合吸食；完成後背甲邊緣與足跡同步變色。</p>
+            </div>
+          </div>
+
+          <section class="console" aria-label="生物指令終端機">
+            <div class="console-head"><span>BIO-COMMAND / 指令終端機</span><span id="termStatus">LINK 98%</span></div>
+            <div id="terminalLog" class="terminal-log" role="log" aria-live="polite" aria-label="終端機紀錄"></div>
+            <form id="terminalForm" class="terminal-form" autocomplete="off">
+              <span class="prompt">❯</span>
+              <input id="terminalInput" type="text" placeholder="輸入指令… help" aria-label="輸入生物指令" spellcheck="false">
+            </form>
+            <div class="console-hints">erupt · blizzard · acid · feed gold/emerald/azure · sonar · scan · reset · help</div>
+          </section>
+
+          <div class="bio-grid" aria-label="生物生理摘要">
+            <div class="bio-cell"><span>CORE TEMP / 局部熱梯度</span><b id="bioCore">15.0</b><em>°C</em><i id="bioCoreBar"></i></div>
+            <div class="bio-cell"><span>ARMOR / 外甲硬度</span><b id="bioArmor">44</b><em>%</em><i id="bioArmorBar"></i></div>
+            <div class="bio-cell"><span>ACID RES / 耐酸抗性</span><b id="bioAcid">16</b><em>%</em><i id="bioAcidBar"></i></div>
+            <div class="bio-cell"><span>SYMBIONT / 共生整合度</span><b id="bioSym">30</b><em>%</em><i id="bioSymBar"></i></div>
+          </div>
+          <p class="metric-note">CORE TEMP 是熱源距離推得的局部溫度；ARMOR 與 ACID RES 是外甲狀態；SYMBIONT 是共生微生物整合度。數值皆為模擬估計。</p>
+
+          <section class="specimen-panel panel-section" aria-label="個體檔案與生成紀錄">
+            <header class="panel-head"><span>INDIVIDUAL FILE / 個體檔案</span><span id="specimenGeneration">GEN 01</span></header>
+            <div class="specimen-id">
+              <div><span>ID</span><b id="specimenId">--</b></div>
+              <div><span>SEED</span><b id="specimenSeed">--</b></div>
+              <div><span>PARENT</span><b id="specimenParent">FOUNDER</b></div>
+            </div>
+            <div class="trait-grid">
+              <div><span>BODY</span><b id="traitBody">--</b></div>
+              <div><span>LEG SCALE</span><b id="traitLegs">--</b></div>
+              <div><span>ANTENNA</span><b id="traitAntenna">--</b></div>
+              <div><span>SPEED</span><b id="traitSpeed">--</b></div>
+              <div><span>TEMP RANGE</span><b id="traitTemp">--</b></div>
+              <div><span>pH RANGE</span><b id="traitPh">--</b></div>
+              <div><span>CHEM AFFINITY</span><b id="traitChem">--</b></div>
+            </div>
+            <div class="panel-actions"><button id="replayGrowthBtn" type="button">↺ REPLAY GROWTH</button><button id="reseedBtn" type="button">NEW SEED</button></div>
+            <p id="lastChallenge" class="panel-note">CHALLENGE // 尚未進行熱梯度考驗</p>
+            <p id="offlineReport" class="panel-note">OFFLINE // 尚無離線紀錄；關閉頁面後以時間差推算。</p>
+          </section>
+
+          <section class="selection-panel panel-section" aria-label="形態分支選擇實驗">
+            <header class="panel-head"><span>SELECTION LAB / 形態分支</span><span>選擇實驗</span></header>
+            <p class="panel-copy">這不是自然演化模擬。選擇會改變下一代的形態參數，並由下方的熱梯度考驗留下紀錄。</p>
+            <div id="variantGrid" class="variant-grid">
+              <button type="button" class="variant-btn is-active" data-variant="legs" aria-pressed="true"><b>LONG LEGS</b><small>腿長／速度</small></button>
+              <button type="button" class="variant-btn" data-variant="hull" aria-pressed="false"><b>BROAD HULL</b><small>體寬／耐溫</small></button>
+              <button type="button" class="variant-btn" data-variant="antennae" aria-pressed="false"><b>DENSE ANTENNA</b><small>感測／化能</small></button>
+            </div>
+            <p id="variantNote" class="panel-note">腿長 +7%、移動 +6%、耐熱上限 +2°C；身體略窄。適合快速穿越熱梯度。</p>
+            <button id="trialBtn" class="trial-btn" type="button">▶ RUN THERMAL TRIAL / 熱梯度考驗</button>
+            <p id="trialStatus" class="trial-status" data-mode="ready">READY // 20 秒內抵達熱泉化學源</p>
+            <div id="generationLog" class="generation-log" aria-live="polite"></div>
+          </section>
+
+          <section class="research-notes panel-section" aria-label="研究註記">
+            <header class="panel-head"><span>RESEARCH NOTES / 研究註記</span><span>READ / 01</span></header>
+            <div class="note-grid">
+              <article class="note-card science"><span class="note-kind">科學參考</span><p>黃石地熱區具有溫度、pH 與化學梯度；化能微生物可利用 H₂S、Fe²⁺ 等無機物取得能量。</p></article>
+              <article class="note-card inference"><span class="note-kind">設計推論</span><p>大型碳基宿主可能以觸角感測熱與化學梯度，並利用共生微生物的代謝產物作為能量來源。</p></article>
+              <article class="note-card fiction"><span class="note-kind">虛構設定</span><p>五萬年後，THERMOPEDA QUADRATA 以長方體甲殼與六根觸角適應熱泉邊緣；能量取得仍是作品假說。</p></article>
+            </div>
+            <div class="symbiosis-chain"><span>熱泉無機化學源</span><i>→</i><span>共生微生物</span><i>→</i><span>宿主（推測）</span></div>
+          </section>
+        </div>
+      </aside>
+      <div class="corner corner-tl"></div><div class="corner corner-tr"></div><div class="corner corner-bl"></div><div class="corner corner-br"></div>
+    </section>
+    <footer class="bottom-bar"><span>FIELD NOTES <b>01—06</b></span><span class="bottom-center">A SYNTHETIC ORGANISM STUDY <i>✳</i> INTERACTIVE WEB PROTOTYPE</span><span>© NEON FAUNA <b>2025</b></span></footer>
+  </main>
+</body>
+</html>
