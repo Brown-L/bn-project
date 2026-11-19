@@ -13,6 +13,7 @@
   const getVent = () => (typeof vent !== 'undefined' ? vent : null);
   const getConfig = () => (typeof CFG !== 'undefined' ? CFG : null);
 
+  const MASTER_VOLUME = 1.1; // 總音量：原為 0.55，放大為 2 倍
   let ctx = null;
   let started = false;
   let muted = false;
@@ -115,7 +116,7 @@
     noiseBuffer = makeNoiseBuffer();
 
     master = ctx.createGain();
-    master.gain.value = muted ? 0 : 0.55;
+    master.gain.value = muted ? 0 : MASTER_VOLUME;
 
     toneLP = ctx.createBiquadFilter();
     toneLP.type = 'lowpass';
@@ -413,7 +414,7 @@
     smoothParam(drone2.frequency, 82.4 + pressure * 10, 0.5);
     smoothParam(drone3.frequency, 41.2 + pressure * 5, 0.5);
     smoothParam(drone4.frequency, 110 + pressure * 6, 0.5);
-    smoothParam(master.gain, muted ? 0 : 0.55, muted ? 0.02 : 0.1);
+    smoothParam(master.gain, muted ? 0 : MASTER_VOLUME, muted ? 0.02 : 0.1);
   }
 
   function toggleMute() {
@@ -421,7 +422,7 @@
     init();
     if (!ctx || !master) return;
     muted = !muted;
-    smoothParam(master.gain, muted ? 0 : 0.55, muted ? 0.02 : 0.08);
+    smoothParam(master.gain, muted ? 0 : MASTER_VOLUME, muted ? 0.02 : 0.08);
     if (!muted && ctx.state === 'suspended') ctx.resume().catch(() => {});
   }
 
