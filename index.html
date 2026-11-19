@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#070912">
+  <title>THERMOPEDA QUADRATA — 生物生態觀測室</title>
+  <!-- 即時自動跳轉至 M3 生物觀測室 -->
+  <meta http-equiv="refresh" content="0; url=./m3-creature/">
+  <script>
+    window.location.replace("./m3-creature/");
+  </script>
+  <style>
+    :root {
+      --bg: #070912;
+      --cyan: #33f5f4;
+      --pink: #ff3f9d;
+      --text: #c5d4db;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: radial-gradient(ellipse at center, #11182a 0%, #070912 100%);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans TC", sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+    }
+    .card {
+      background: rgba(12, 17, 27, 0.85);
+      border: 1px solid rgba(51, 245, 244, 0.35);
+      box-shadow: 0 0 25px rgba(51, 245, 244, 0.15), inset 0 0 15px rgba(51, 245, 244, 0.05);
+      padding: 40px 32px;
+      border-radius: 8px;
+      max-width: 520px;
+      width: 100%;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      color: var(--cyan);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+    h1 {
+      font-size: 24px;
+      color: #eefbff;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    p {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #8c9ea8;
+      margin-bottom: 24px;
+    }
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid rgba(51, 245, 244, 0.2);
+      border-top-color: var(--cyan);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 24px auto;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 28px;
+      background: linear-gradient(135deg, rgba(51, 245, 244, 0.25), rgba(9, 16, 26, 0.9));
+      border: 1px solid var(--cyan);
+      color: #eefbff;
+      text-decoration: none;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+    .btn:hover {
+      background: rgba(51, 245, 244, 0.4);
+      box-shadow: 0 0 15px rgba(51, 245, 244, 0.4);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <span class="badge">Yellowstone Caldera // Specimen Lab</span>
+    <div class="spinner"></div>
+    <h1>THERMOPEDA QUADRATA</h1>
+    <p>正在連線並載入五萬年後的破火山口生態觀測室...<br>若瀏覽器未自動跳轉，請點擊下方按鈕直接進入：</p>
+    <a class="btn" href="./m3-creature/">進入生物觀測室 ➔</a>
+  </div>
+</body>
+</html>
